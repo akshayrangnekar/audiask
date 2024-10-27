@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function NavigationBar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -14,10 +15,18 @@ export default function NavigationBar() {
           {/* Left Side: Logo and Primary Links */}
           <div className="flex items-center">
             {/* Logo */}
-            <div className="text-lg font-bold pl-4">
-              <Link href="/" className="text-primary-inverse hover:text-primary-inverse">
-                Logo
-              </Link>
+            <div className="pl-4">
+                <Link href="/" className="flex items-center">
+                    <div className="relative h-8 w-24 md:h-10 md:w-32">
+                    <Image
+                        src="/images/audiask.logo.png"
+                        alt="Audiask Logo"
+                        layout="fill"
+                        objectFit="contain"
+                        priority
+                    />
+                    </div>
+                </Link>
             </div>
             {/* Primary Links */}
             <div className="hidden md:flex ml-5 space-x-5">
