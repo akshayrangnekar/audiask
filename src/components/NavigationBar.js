@@ -3,9 +3,25 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSelector, useDispatch } from 'react-redux';
+import { logOut } from '../auth';
+import { clearUser } from '../store/authSlice';
 
 export default function NavigationBar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      dispatch(clearUser());
+      // Optionally redirect to the home page
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
 
   return (
     <>
@@ -53,22 +69,15 @@ export default function NavigationBar() {
           <div className="flex items-center">
             {/* Secondary Links */}
             <div className="hidden md:flex space-x-5 pr-4">
-              <a
-                href="https://news.bbc.co.uk"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-inverse-dull hover:text-primary-inverse"
-              >
-                BBC
-              </a>
-              <a
-                href="https://www.cnn.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-inverse-dull hover:text-primary-inverse"
-              >
-                CNN
-              </a>
+              {/* ... existing secondary links ... */}
+              {user && (
+                <button
+                  onClick={handleLogout}
+                  className="text-primary-inverse-dull hover:text-primary-inverse"
+                >
+                  Logout
+                </button>
+              )}
             </div>
 
             {/* Mobile Hamburger Menu */}
